@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pri.liyang.dao.AccountDao">
+
+    <resultMap id="BaseResultMap" type="pri.liyang.entity.Account">
+        <!--@Table account-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="account" column="account" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, username, account
+        from distribute.account
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, username, account
+        from distribute.account
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, username, account
+        from distribute.account
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="account != null">
+                and account = #{account}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into distribute.account(username, account)
+        values (#{username}, #{account})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update distribute.account
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="account != null">
+                account = #{account},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from distribute.account where id = #{id}
+    </delete>
+
+</mapper>
