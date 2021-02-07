@@ -33,7 +33,7 @@ public class ConsumerController {
     @GetMapping("/startTrans/lcn")
     @Transactional(rollbackFor = Exception.class)
     @LcnTransaction
-        public String startTransactionLcn(String name) {
+    public String startTransactionLcn(String name) {
         // 事务：张三+10000，李四+10000，王五-20000
 
         // 首先，王五-20000
